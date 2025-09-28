@@ -19,7 +19,10 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(cors({
-   origin: ["http://localhost:5173", "http://localhost:5174", "http://localhost:5175", "http://localhost:5176"],
+   origin: ["http://localhost:5173", "http://localhost:5174", "http://localhost:5175", "http://localhost:5176",
+    "https://www.ghumobee.com",
+    "https://ghumo-bee-demo.vercel.app",
+    "https://ghumo-k299uqs2w-ghumobees-projects.vercel.app"],
    credentials: true,
  }));
  
