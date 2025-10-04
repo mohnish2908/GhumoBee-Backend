@@ -113,7 +113,7 @@ exports.createOpportunity = async (req, res) => {
 
 exports.editOpportunity = async (req, res) => {
   try {
-    console.log("editOpportunity called", req.body);
+   
     console.log("files", req.files);
 
     const opportunityId = req.params.id;
@@ -123,6 +123,7 @@ exports.editOpportunity = async (req, res) => {
     }
 
     const updates = req.body;
+     console.log("editOpportunity called", updates.businessLink);
 
     // Parse new uploaded files - handle single file or array
     const newFiles = req.files?.newImages 
@@ -242,7 +243,7 @@ exports.editOpportunity = async (req, res) => {
 
     // Set status based on isActive
     fieldsToUpdate.status = fieldsToUpdate.isActive ? "active" : "inactive";
-
+    // console.log("fieldsToUpdate", fieldsToUpdate);
     // Update the opportunity
     const updatedOpportunity = await Opportunity.findByIdAndUpdate(
       opportunityId,
@@ -290,7 +291,7 @@ exports.getOpportunityById = async (req, res) => {
   try {
     const opportunityId = req.params.id;
 
-    const opportunity = await Opportunity.findById(opportunityId).select("-propertyAddress -businessLink -applications")
+    const opportunity = await Opportunity.findById(opportunityId).select("-applications")
       .populate({
       path: "host",
       select: "user designation organizationName organizationType needOfVolunteer bio opportunitiesPosted",
