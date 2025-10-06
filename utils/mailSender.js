@@ -11,6 +11,7 @@ const mailSender = async (email, title, body) => {
         pass: process.env.MAIL_PASS,
       },
       secure: false,
+      port: 465,
     })
 
     let info = await transporter.sendMail({
