@@ -7,6 +7,7 @@ const Volunteer = require("../models/Volunteer");
 const Otp = require("../models/Otp");
 const mailSender = require("../utils/mailSender");
 const { forgotPasswordMail } = require("../mails/forgotPasswordMail");
+const {contactFormMail}=require("../mails/contactFormMail")
 const {uploadImageToCloudinary} =require("../utils/imageUploader")
 require("dotenv").config();
 
@@ -708,3 +709,28 @@ exports.searchUserByEmail = async (req, res) => {
     });
   }
 };
+
+exports.contactUs = async (req, res) => {
+  try{
+    const { name,email,subject,message } = req.body;
+    if(!name || !email || !subject || !message){
+      return res.status(400).json({
+        success: false,
+        message: "All fields are required",
+      });
+    }
+    const mailContent = contactFormMail(name,email,subject,message);
+    await mailSender("info@ghumobee.com", "Contact Us", mailContent);
+    return res.status(200).json({
+      success: true,
+      message: "Message sent successfully",
+    });
+  }
+  catch(err){
+    return res.status(500).json({
+      success: false,
+      message: "Could not send message",
+      error: err.message
+    });
+  }
+}

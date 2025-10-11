@@ -14,7 +14,8 @@ const {
 	getAllUsers,
 	getUserById,
 	adminVerifyUser,
-	searchUserByEmail
+	searchUserByEmail,
+	contactUs
 } = require("../controllers/Auth");
 
 const { 
@@ -75,5 +76,7 @@ router.get("/admin/users", auth, isAdmin, getAllUsers);
 router.get("/admin/user/:userId", auth, isAdmin, getUserById);
 router.get("/admin/search-user", auth, isAdmin, searchUserByEmail);
 router.put("/admin/verify-user/:userId", auth, isAdmin, adminVerifyUser);
+
+router.post("/contactus",contactUs)
 
 module.exports = router
