@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const opportunitySchema = new mongoose.Schema(
   {
     host: { type: mongoose.Schema.Types.ObjectId, ref: "Host", required: true },
-    title: { type: String, required: true },
+    title: { type: String,default: "" },
     description: { type: String, required: true },
     volunteerIn: { type: String, default: "" },
     images: [

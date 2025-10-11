@@ -59,7 +59,7 @@ exports.createOpportunity = async (req, res) => {
     );
 
     const opportunity = new Opportunity({
-      title,
+      title: title || "",
       description,
       volunteerIn,
       state,
