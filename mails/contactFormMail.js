@@ -5,7 +5,7 @@ exports.contactFormMail = (name, email, subject, message) => {
                 
                 <!-- Header -->
                 <div style="text-align: center; margin-bottom: 24px;">
-                    <img src="https://i.postimg.cc/KjG1LRhk/a.png" alt="Logo" style="height: 48px; margin: auto;" />
+                    <img src="https://res.cloudinary.com/dmaxu09vv/image/upload/v1757593286/business_documents/te0qhz26l4bxjavldgi0.webp" alt="Logo" style="height: 48px; margin: auto;" />
                 </div>
 
                 <!-- Title -->
