@@ -4,16 +4,23 @@ const router = express.Router();
 const {
 	createApplication,
 	editApplication,
-	getApplications
+	getApplications,
+	getVolunteerSideApplications
 } = require("../controllers/Application");
 
+const{auth,isHost,isVolunteer,isAdmin,isPaidMember,isProfileComplete}=require("../middlewares/auth");
+
 // Create a new application
-router.post("/create", createApplication);
+router.post("/create", auth, isVolunteer, isProfileComplete, isPaidMember,createApplication);
 
 // Edit an application
-router.put("/edit/:applicationId", editApplication);
+router.put("/edit/:applicationId", auth, isVolunteer, editApplication);
 
 // Get applications (volunteer, host, admin)
-router.get("/", getApplications);
+router.get("/", auth, getApplications);
+
+//get applications for volunteer only
+router.get("/volunteer", auth, isVolunteer, getVolunteerSideApplications);
+
 
 module.exports = router;

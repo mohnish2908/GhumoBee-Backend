@@ -7,11 +7,11 @@ const applicationSchema = new mongoose.Schema({
   opportunity: { type: mongoose.Schema.Types.ObjectId, ref: "Opportunity", required: true },
   status: {
     type: String,
-    enum: ["pending", "shortlisted", "approved", "rejected", "withdrawn","volunteering"],
+    enum: ["pending", "shortlisted", "completed", "rejected", "withdrawn","volunteering"],
     default: "pending"
   },
-  from:{type:Date, default: null},
-  to:{type:Date, default: null},
+  startDate:{type:Date, default: null},
+  endDate:{type:Date, default: null},
   applicationDate: { type: Date, default: Date.now },
   message: { type: String, default: "" },
   coverLetter: { type: String, default: "" },
