@@ -31,29 +31,33 @@ const allowedOrigins = [
   "https://ghumo-k299uqs2w-ghumobees-projects.vercel.app",
 ];
 
-// ✅ Apply CORS globally
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
-  })
-);
-
-// ✅ Handle all preflight (OPTIONS) requests safely
-app.options(/.*/, cors({
-  origin: allowedOrigins,
-  credentials: true,
+// ✅ CORS configuration (same for normal + preflight)
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-}));
+  allowedHeaders: [
+    "Content-Type",
+    "Authorization",
+    "headers", // ✅ custom header
+    "X-Requested-With",
+    "Accept",
+    "Origin",
+  ],
+  credentials: true,
+  optionsSuccessStatus: 200,
+};
+
+// ✅ Apply CORS globally
+app.use(cors(corsOptions));
+
+// ✅ Handle all preflight (OPTIONS) requests safely (Render requires this)
+app.options(/.*/, cors(corsOptions));
 
 // ✅ File upload + static files
 app.use(fileUpload({ useTempFiles: true, tempFileDir: "/tmp/" }));
