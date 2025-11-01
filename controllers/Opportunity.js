@@ -317,8 +317,8 @@ exports.getHostOpportunity=async (req, res) => {
 
     const user = await User.findById(userId).select("host");
 
-    const opportunities = await Opportunity.find({ host: user.host })
-    console.log("opp",opportunities)
+    const opportunities = await Opportunity.find({ host: user.host }).select("propertyName")
+    // console.log("opp",opportunities)
     return res.status(200).json({ success: true, opportunities });
   } catch (error) {
     console.error("Error fetching host opportunities:", error);

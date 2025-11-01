@@ -5,7 +5,9 @@ const {
 	createApplication,
 	editApplication,
 	getApplications,
-	getVolunteerSideApplications
+	getVolunteerSideApplications,
+	getHostSideApplications,
+	getApplicationById
 } = require("../controllers/Application");
 
 const{auth,isHost,isVolunteer,isAdmin,isPaidMember,isProfileComplete}=require("../middlewares/auth");
@@ -22,5 +24,8 @@ router.get("/", auth, getApplications);
 //get applications for volunteer only
 router.get("/volunteer", auth, isVolunteer, getVolunteerSideApplications);
 
+router.get("/host",auth,isHost,getHostSideApplications)
+
+router.get("/:applicationId",auth,getApplicationById)
 
 module.exports = router;
