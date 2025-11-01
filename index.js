@@ -12,7 +12,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5005;
 
-// Connect to Database
+// ---------- CONNECT DATABASE ----------
 database.connect();
 
 // ---------- MIDDLEWARES ----------
@@ -31,11 +31,10 @@ const allowedOrigins = [
   "https://ghumo-k299uqs2w-ghumobees-projects.vercel.app",
 ];
 
-// ✅ Apply robust CORS configuration
+// ✅ Apply CORS globally
 app.use(
   cors({
     origin: function (origin, callback) {
-      // Allow requests with no origin (like mobile apps or curl)
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
@@ -48,8 +47,8 @@ app.use(
   })
 );
 
-// ✅ Handle all preflight (OPTIONS) requests manually for Render
-app.options("*", cors({
+// ✅ Handle all preflight (OPTIONS) requests safely
+app.options(/.*/, cors({
   origin: allowedOrigins,
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
@@ -73,7 +72,7 @@ app.use("/api/v1/application", applicationRoutes);
 app.use("/api/v1/coupon", couponRoutes);
 app.use("/api/v1/payment", paymentRoutes);
 
-// ✅ Optional route to test CORS from frontend
+// ✅ Test route for CORS
 app.get("/test-cors", (req, res) => {
   res.json({ success: true, message: "CORS is working perfectly ✅" });
 });
